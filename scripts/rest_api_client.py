@@ -1,7 +1,9 @@
 import logging
-import requests
 from base64 import b64encode
 from typing import Any
+import csv
+
+import requests
 
 
 class RestApiClient:
@@ -86,8 +88,11 @@ class SonarQubeClient(RestApiClient):
         super().__init__(base_url, **kwargs)
         self.set_auth_token(token)
 
-    def tmp(
+    def fetch_project_metrics_to_csv(
         self,
+        project_key: str,
+        metrics: list[str],
+        output_file: str,
     ) -> None:
         """指定したメトリクスをプロジェクトから取得しCSV保存"""
         endpoint = "/api/measures/component"
